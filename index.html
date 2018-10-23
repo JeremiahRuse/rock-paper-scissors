@@ -11,5 +11,22 @@
       <li>Click on the console tab in the inspector.</li>
       <li>Type "game();" into the console and hit enter.<li>
     </ol>
+    <script>
+      function computerPlay() {
+        let options = ["rock", "paper", "scissors"]
+        return options[getRandomInt(0, 3)];
+      }
+      
+      function getRandomInt(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+      }
+      
+      function play(userInput, computerInput = computerPlay()) {
+        userInput.toLowerCase();
+        if (userInput === computerInput) {
+          
+        }
+      }
+    </script>
   </body>
 </html>
