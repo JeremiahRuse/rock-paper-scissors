@@ -11,6 +11,11 @@
       <li>Click on the console tab in the inspector.</li>
       <li>Type "game();" into the console and hit enter.</li>
     </ol>
+
+    <button id="rock">Rock</button>
+    <button id="paper">Paper</button>
+    <button id="scissors">Scissors</button>
+
     <script>
       let options = ["rock", "paper", "scissors"];
       let winConditions = ["rockscissors", "scissorspaper", "paperrock"];
@@ -26,12 +31,15 @@
       function playRound(userInput, computerInput = computerPlay()) {
         let userInputLowerCase = userInput.toLowerCase();
         if (userInputLowerCase === computerInput) {
+          console.log('tie');
           return 0;
         }
         else if (checkForMatch(userInputLowerCase + computerInput, winConditions)) {
+          console.log('win');
           return 1;
         }
         else {
+          console.log('lose');
           return -1;
         }
       }
@@ -61,6 +69,13 @@
         }
         console.log("Game over! Final score is: " + score);
       }
+
+      var buttons = document.querySelectorAll('button');
+      buttons.forEach((button) => {
+        button.addEventListener('click', (e) => {
+          playRound(button.textContent);
+        });
+      });
 
     </script>
   </body>
