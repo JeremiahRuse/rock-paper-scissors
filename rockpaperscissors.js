@@ -1,6 +1,8 @@
 let options = ["rock", "paper", "scissors"];
 let winConditions = ["rockscissors", "scissorspaper", "paperrock"];
 
+const display = document.querySelector("#display");
+
 function computerPlay() {
     return options[getRandomInt(0, 3)];
 }
@@ -12,15 +14,15 @@ function getRandomInt(min, max) {
 function playRound(userInput, computerInput = computerPlay()) {
     let userInputLowerCase = userInput.toLowerCase();
     if (userInputLowerCase === computerInput) {
-    console.log('tie');
+    displayResults('tie');
     return 0;
     }
     else if (checkForMatch(userInputLowerCase + computerInput, winConditions)) {
-    console.log('win');
+    displayResults('win');
     return 1;
     }
     else {
-    console.log('lose');
+    displayResults('lose');
     return -1;
     }
 }
@@ -49,6 +51,12 @@ function game() {
     }
     }
     console.log("Game over! Final score is: " + score);
+}
+
+function displayResults(textToDisplay) {
+    let newItem = document.createElement("p");
+    newItem.textContent = textToDisplay;
+    display.appendChild(newItem);
 }
 
 var buttons = document.querySelectorAll('button');
