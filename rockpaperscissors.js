@@ -1,7 +1,29 @@
 let options = ["rock", "paper", "scissors"];
 let winConditions = ["rockscissors", "scissorspaper", "paperrock"];
+let playerScore = 0; 
+let computerScore = 0;
+const winningScore = 5;
 
 const display = document.querySelector("#display");
+const playerScoreDisplayArea = document.querySelector("#playerScore");
+const computerScoreDisplayArea = document.querySelector("#computerScore");
+
+let playerScoreToDisplay = document.createElement("h1");
+let computerScoreToDisplay = document.createElement("h1");
+
+updateScore(playerScore, playerScoreToDisplay);
+updateScore(computerScore, computerScoreToDisplay);
+
+playerScoreDisplayArea.appendChild(playerScoreToDisplay);
+computerScoreDisplayArea.appendChild(computerScoreToDisplay);
+
+let feedBackText = document.createElement("p");
+display.appendChild(feedBackText);
+
+
+function updateScore(scoreToUpdate, elementToUpdate) {
+    elementToUpdate.textContent = scoreToUpdate;
+}
 
 function computerPlay() {
     return options[getRandomInt(0, 3)];
@@ -14,18 +36,43 @@ function getRandomInt(min, max) {
 function playRound(userInput, computerInput = computerPlay()) {
     let userInputLowerCase = userInput.toLowerCase();
     if (userInputLowerCase === computerInput) {
-    displayResults('tie');
-    return 0;
+        displayResults('tie');
     }
     else if (checkForMatch(userInputLowerCase + computerInput, winConditions)) {
-    displayResults('win');
-    return 1;
+        playerScore += 1;
+        displayResults('win');
+        updateScore(playerScore, playerScoreToDisplay);
     }
     else {
-    displayResults('lose');
-    return -1;
+        computerScore += 1;
+        displayResults('lose');
+        updateScore(computerScore, computerScoreToDisplay);
+    }
+
+    if (checkForGameOver(winningScore, playerScore)) {
+        displayResults('You Win!');
+        resetGame();
+    }
+    if (checkForGameOver(winningScore, computerScore)) {
+        displayResults('You Lost!');
+        resetGame();
     }
 }
+
+function resetGame() {
+    playerScore = 0;
+    computerScore = 0;
+}
+
+function checkForGameOver(maxScore, scoreToCheck) {
+    if (scoreToCheck >= maxScore) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
 
 function checkForMatch(item, conditions) {
     for (i = 0; i < conditions.length; ++i) {
@@ -35,28 +82,8 @@ function checkForMatch(item, conditions) {
     }
 }
 
-function game() {
-    let score = 0;
-    for (j = 0; j < 5; ++j) {
-    let results = playRound(prompt("Enter 'rock', 'paper' or 'scissors'"));
-    score += results;
-    if (results === 1) {
-        console.log("You win this round! Your score so far is: " + score);
-    }
-    else if (results === -1) {
-        console.log("You lost. Score so far is: " + score);
-    }
-    else {
-        console.log("Tie! Score is still at: " + score);
-    }
-    }
-    console.log("Game over! Final score is: " + score);
-}
-
 function displayResults(textToDisplay) {
-    let newItem = document.createElement("p");
-    newItem.textContent = textToDisplay;
-    display.appendChild(newItem);
+    feedBackText.textContent = textToDisplay;
 }
 
 var buttons = document.querySelectorAll('button');
